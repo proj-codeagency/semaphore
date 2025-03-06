@@ -1,0 +1,52 @@
+version: "3.5"
+
+networks:
+  dokploy-network:
+    external: true
+  semaphore:
+services:
+  postgres-semaphore:
+    restart: unless-stopped
+    image: postgres:14
+    networks:
+      - semaphore
+    hostname: postgres-semaphore
+    volumes:
+      - /nfs/volumes/semaphore/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: semaphore
+      POSTGRES_PASSWORD: Admin@123
+      POSTGRES_DB: semaphore
+  semaphore:
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.semaphore.entrypoints=web
+        - traefik.http.routers.semaphore.rule=Host(`semaphore.home.lab`)
+        - traefik.http.routers.semaphore.service=semaphore
+        - traefik.http.services.semaphore.loadbalancer.server.port=3000
+    restart: unless-stopped
+    image: semaphoreui/semaphore:latest
+    networks:
+      - dokploy-network
+      - semaphore
+    ports:
+     - 4001:3000
+    volumes:
+      - /nfs/volumes/semaphore/app:/tmp/semaphore
+    environment:
+      SEMAPHORE_DB_USER: semaphore
+      SEMAPHORE_DB_PASS: Admin@123
+      SEMAPHORE_DB_HOST: postgres-semaphore 
+      SEMAPHORE_DB_PORT: 5432 
+      SEMAPHORE_DB_DIALECT: postgres 
+      SEMAPHORE_DB: semaphore
+      SEMAPHORE_PLAYBOOK_PATH: /tmp/semaphore/
+      SEMAPHORE_ADMIN_PASSWORD: Admin@123
+      SEMAPHORE_ADMIN_NAME: admin
+      SEMAPHORE_ADMIN_EMAIL: admin@localhost
+      SEMAPHORE_ADMIN: admin
+      SEMAPHORE_ACCESS_KEY_ENCRYPTION: gs72mPntFATGJs9qK0pQ0rKtfidlexiMjYCH9gWKhTU=
+      TZ: UTC
+    depends_on:
+      - postgres-semaphore
