@@ -28,7 +28,7 @@ services:
       - dokploy-network
       - semaphore
     ports:
-     - 4001:3000
+     - 4001:6000
     volumes:
       - /nfs/volumes/semaphore/app:/tmp/semaphore
     environment:
@@ -44,6 +44,7 @@ services:
       SEMAPHORE_ADMIN_EMAIL: admin@localhost
       SEMAPHORE_ADMIN: admin
       SEMAPHORE_ACCESS_KEY_ENCRYPTION: gs72mPntFATGJs9qK0pQ0rKtfidlexiMjYCH9gWKhTU=
+      SEMAPHORE_WEB_PORT: 6000
       TZ: UTC
     depends_on:
       - postgres-semaphore
