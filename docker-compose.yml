@@ -44,7 +44,9 @@ services:
       SEMAPHORE_ADMIN_EMAIL: admin@localhost
       SEMAPHORE_ADMIN: admin
       SEMAPHORE_ACCESS_KEY_ENCRYPTION: gs72mPntFATGJs9qK0pQ0rKtfidlexiMjYCH9gWKhTU=
-      SEMAPHORE_WEB_PORT: 6000
+      SEMAPHORE_PORT: "6000"
+      SEMAPHORE_WEB_ROOT: "http://semaphore.example.com"
+      SEMAPHORE_MAX_PARALLEL_TASKS: "10"
       TZ: UTC
     depends_on:
       - postgres-semaphore
