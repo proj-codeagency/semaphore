@@ -21,7 +21,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.semaphore.rule=Host(`semaphore.example.com`)"
       - "traefik.http.routers.semaphore.entrypoints=web"
-      - "traefik.http.services.semaphore.loadbalancer.server.port=3000"
+      - "traefik.http.services.semaphore.loadbalancer.server.port=6000"
     restart: unless-stopped
     image: semaphoreui/semaphore:latest
     networks:
