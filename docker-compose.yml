@@ -1,9 +1,7 @@
-version: "3.5"
-
 networks:
-  dokploy-network:
-    external: true
   semaphore:
+  dokploy-network: 
+    external: true  	
 services:
   postgres-semaphore:
     restart: unless-stopped
