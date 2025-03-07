@@ -19,7 +19,7 @@ services:
     deploy:
       labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.semaphore.rule=Host(`semaphore.example.com`)"
+      - "traefik.http.routers.semaphore.rule=Host(`semaphore.home.lab`)"
       - "traefik.http.routers.semaphore.entrypoints=web"
       - "traefik.http.services.semaphore.loadbalancer.server.port=6000"
     restart: unless-stopped
